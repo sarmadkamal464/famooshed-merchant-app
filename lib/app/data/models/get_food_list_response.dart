@@ -12,7 +12,7 @@ String getFoodListResponseToJson(GetFoodListResponse data) =>
 
 class GetFoodListResponse {
   String error;
-  String id;
+  dynamic id;
   List<Food> foods;
 
   GetFoodListResponse({
@@ -36,11 +36,11 @@ class GetFoodListResponse {
 }
 
 class Food {
-  int id;
+  dynamic id;
   DateTime createdAt;
   DateTime updatedAt;
   int user;
-  int restaurant;
+  dynamic restaurant;
   String name;
   int imageid;
   int? invenotory_stock;
@@ -50,8 +50,8 @@ class Food {
   int category;
   String ingredients;
   String unit;
-  int packageCount;
-  int weight;
+  dynamic packageCount;
+  dynamic weight;
   int canDelivery;
   int stars;
   int published;
