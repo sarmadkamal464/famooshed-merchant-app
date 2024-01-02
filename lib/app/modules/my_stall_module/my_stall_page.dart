@@ -6,6 +6,7 @@ import 'package:famooshed_vendor/app/modules/widgets/custom_appbar_widget.dart';
 import 'package:famooshed_vendor/app/modules/widgets/custom_button_widget.dart';
 import 'package:famooshed_vendor/app/routes/app_pages.dart';
 import 'package:famooshed_vendor/app/theme/app_text_theme.dart';
+import 'package:famooshed_vendor/app/theme/loader.dart';
 import 'package:famooshed_vendor/app/theme/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -31,7 +32,7 @@ class MyStallPage extends GetView<MyStallController> {
             child: GetBuilder<MyStallController>(builder: (controller) {
               if (controller.isLoading.value) {
                 return const Center(
-                  child: CircularProgressIndicator.adaptive(),
+                  child: Loader(),
                 );
               } else {
                 if (controller.getMyStallResponse!.restaurants.isNotEmpty) {
@@ -79,8 +80,7 @@ class MyStallPage extends GetView<MyStallController> {
                                     ),
                                   ),
                                 ),
-                                placeholder: (context, url) =>
-                                    const CircularProgressIndicator(),
+                                placeholder: (context, url) => const Loader(),
                                 errorWidget: (context, url, error) =>
                                     const Icon(Icons.error),
                               ),
