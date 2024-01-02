@@ -5,6 +5,7 @@ import 'package:famooshed_vendor/app/common/util/validators.dart';
 import 'package:famooshed_vendor/app/data/models/get_food_detail_response.dart';
 import 'package:famooshed_vendor/app/data/models/get_product_category_model.dart';
 import 'package:famooshed_vendor/app/modules/widgets/custom_appbar_widget.dart';
+import 'package:famooshed_vendor/app/theme/loader.dart';
 import 'package:famooshed_vendor/libraries/dotted_container/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -597,8 +598,7 @@ class AddEditFoodPage extends GetView<AddEditFoodManagementController> {
                           ),
                         ],
                       )),
-                  placeholder: (context, url) =>
-                      Center(child: const CircularProgressIndicator()),
+                  placeholder: (context, url) => const Center(child: Loader()),
                   errorWidget: (context, url, error) => const Icon(Icons.error),
                 )
               // : foodManagementController.mainFile != null
@@ -1356,8 +1356,7 @@ class AddEditFoodPage extends GetView<AddEditFoodManagementController> {
                                   ),
                                 ),
                               ),
-                              placeholder: (context, url) =>
-                                  const CircularProgressIndicator(),
+                              placeholder: (context, url) => const Loader(),
                               errorWidget: (context, url, error) =>
                                   const Icon(Icons.error),
                             )
@@ -1499,8 +1498,7 @@ class AddEditFoodPage extends GetView<AddEditFoodManagementController> {
                                   ),
                                 ),
                               ),
-                              placeholder: (context, url) =>
-                                  const CircularProgressIndicator(),
+                              placeholder: (context, url) => const Loader(),
                               errorWidget: (context, url, error) =>
                                   const Icon(Icons.error),
                             )

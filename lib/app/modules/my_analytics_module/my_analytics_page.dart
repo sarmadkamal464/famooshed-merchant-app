@@ -5,6 +5,7 @@ import 'package:famooshed_vendor/app/modules/widgets/custom_appbar_widget.dart';
 import 'package:famooshed_vendor/app/modules/widgets/custom_button_widget.dart';
 import 'package:famooshed_vendor/app/routes/app_pages.dart';
 import 'package:famooshed_vendor/app/theme/app_text_theme.dart';
+import 'package:famooshed_vendor/app/theme/loader.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -223,7 +224,7 @@ class MyAnalyticsPage extends GetView<MyAnalyticsController> {
                               height: getProportionateScreenHeight(150),
                               width: getProportionateScreenWidth(130),
                               alignment: Alignment.center,
-                              child: CircularProgressIndicator(),
+                              child: const Loader(),
                             );
                           },
                         ),
@@ -526,7 +527,7 @@ class MyAnalyticsPage extends GetView<MyAnalyticsController> {
                                             getProportionateScreenHeight(80),
                                         width: getProportionateScreenWidth(80),
                                         alignment: Alignment.center,
-                                        child: CircularProgressIndicator(),
+                                        child: const Loader(),
                                       );
                                     },
                                   ),

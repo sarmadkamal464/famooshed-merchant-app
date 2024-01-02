@@ -2,6 +2,7 @@ import 'package:famooshed_vendor/app/modules/wallet_module/wallet_controller.dar
 import 'package:famooshed_vendor/app/modules/widgets/custom_appbar_widget.dart';
 import 'package:famooshed_vendor/app/modules/widgets/custom_button_widget.dart';
 import 'package:famooshed_vendor/app/theme/app_text_theme.dart';
+import 'package:famooshed_vendor/app/theme/loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -29,7 +30,7 @@ class WalletPage extends GetView<WalletController> {
             builder: (WalletController walletController) {
           if (walletController.isLoading.value) {
             return const Center(
-              child: CircularProgressIndicator.adaptive(),
+              child: Loader(),
             );
           } else {
             return SingleChildScrollView(

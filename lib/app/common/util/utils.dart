@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:famooshed_vendor/app/common/util/exports.dart';
 import 'package:famooshed_vendor/app/modules/widgets/custom_inkwell_widget.dart';
 import 'package:famooshed_vendor/app/modules/widgets/custom_text_button.dart';
+import 'package:famooshed_vendor/app/theme/loader.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -152,9 +153,7 @@ abstract class Utils {
     closeDialog();
 
     Get.dialog(
-      const Center(
-        child: CircularProgressIndicator(),
-      ),
+      const Loader(),
       name: 'loadingDialog',
     );
   }
