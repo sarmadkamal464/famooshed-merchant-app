@@ -2,6 +2,7 @@ import 'package:famooshed_vendor/app/modules/wallet_module/wallet_controller.dar
 import 'package:famooshed_vendor/app/modules/widgets/custom_appbar_widget.dart';
 import 'package:famooshed_vendor/app/modules/widgets/custom_button_widget.dart';
 import 'package:famooshed_vendor/app/theme/app_text_theme.dart';
+import 'package:famooshed_vendor/app/theme/loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -29,7 +30,7 @@ class WalletPage extends GetView<WalletController> {
             builder: (WalletController walletController) {
           if (walletController.isLoading.value) {
             return const Center(
-              child: CircularProgressIndicator.adaptive(),
+              child: Loader(),
             );
           } else {
             return SingleChildScrollView(
@@ -263,8 +264,8 @@ class WalletPage extends GetView<WalletController> {
           ),
           SizedBox(height: Get.height * .01),
           Container(
-            width: 100,
-            height: 23,
+            width: 140,
+            height: 26,
             padding: const EdgeInsets.symmetric(horizontal: 10),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
@@ -273,6 +274,8 @@ class WalletPage extends GetView<WalletController> {
                     : AppColors.lightYellow),
             child: Center(
                 child: Text(order.status,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
                     style: urbanistSemiBold.copyWith(
                         fontSize: 14, color: "#1D2C23".fromHex))),
           ),
