@@ -1,6 +1,7 @@
 import 'package:famooshed_vendor/app/common/util/exports.dart';
 import 'package:famooshed_vendor/app/common/values/app_icons.dart';
 import 'package:famooshed_vendor/app/data/models/order_list_response.dart';
+import 'package:famooshed_vendor/app/modules/my_orders_module/my_orders_controller.dart';
 import 'package:famooshed_vendor/app/modules/over_view_module/over_view_controller.dart';
 import 'package:famooshed_vendor/app/modules/widgets/custom_button_widget.dart';
 import 'package:famooshed_vendor/app/routes/app_pages.dart';
@@ -277,78 +278,68 @@ class OverViewPage extends GetView<OverViewController> {
   }
 
   Widget orderItem(Order order) {
-    return Padding(
-      padding: EdgeInsets.all(16.0),
-      child: Column(
-        children: [
-          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Text('${order.userName ?? '-'}'.capitalize.toString(),
-                style: urbanistSemiBold.copyWith(
-                    height: .25, fontSize: 16, color: AppColors.appTheme)),
-            Text(controller.currency + '${order.total}',
-                style: urbanistExtraBold.copyWith(
-                    height: .25, fontSize: 16, color: AppColors.appTheme))
-          ]),
-          SizedBox(height: Get.height * .02),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text("ID ${order.id}",
-                  style: urbanistExtraBold.copyWith(
-                      fontSize: 16, color: AppColors.doveGray)),
-              Text(
-                DateFormat('d MMMM, yyyy hh:mm:ss')
-                    .format((DateTime.parse(order.createdAt.toString()))),
-              )
+    MyOrdersController orderController =
+        Get.put<MyOrdersController>(MyOrdersController());
+    return InkWell(
+      onTap: () {
+        orderController.currentOrder = order;
+        if (orderController.orderStatus.isNotEmpty) {
+          orderController.selectedStatus = orderController.orderStatus
+              .where((element) => element.id == order.status)
+              .first;
+          if (orderController.selectedStatus.id == null) {
+            orderController.selectedStatus = orderController.orderStatus[0];
+          }
+        }
 
-              // Text(order.createdAt.toString(),
-              //     style: urbanistExtraBold.copyWith(
-              //         fontSize: 16, color: AppColors.doveGray)),
-            ],
-          ),
-          SizedBox(height: Get.height * .02),
-          Row(
-            children: [
-              Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: getProportionateScreenWidth(8),
-                  vertical: getProportionateScreenHeight(5),
-                ),
-                margin: EdgeInsets.symmetric(
-                  horizontal: getProportionateScreenWidth(3),
-                ),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: order.status != null && order.status == 5
-                        ? AppColors.lightGreen
-                        : AppColors.lightYellow),
-                child: Center(
-                    child: Text("${controller.getStatus(order.status ?? 1)}",
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                        style: urbanistSemiBold.copyWith(fontSize: 14))),
-              ),
-              order.curbsidePickup == "true"
-                  ? Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: getProportionateScreenWidth(8),
-                        vertical: getProportionateScreenHeight(5),
-                      ),
-                      margin: EdgeInsets.symmetric(
-                        horizontal: getProportionateScreenWidth(3),
-                      ),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          color: AppColors.lightPink.withOpacity(.24)),
-                      child: Center(
-                          child: Text("Curbside Pickup",
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                              style: urbanistSemiBold.copyWith(fontSize: 14))),
-                    )
-                  : SizedBox(),
-              Flexible(
-                child: Container(
+        if (orderController.drivers.isNotEmpty) {
+          orderController.selectedDriver = orderController.drivers
+              .where((element) =>
+                  element.id ==
+                  (order.driver != null && order.driver != 0
+                      ? order.driver
+                      : 191))
+              .first;
+          if (orderController.selectedDriver.id == null) {
+            orderController.selectedDriver = orderController.drivers[0];
+          }
+        }
+        orderController.update();
+        Get.toNamed(Routes.ORDER_DETAILS);
+      },
+      child: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+              Text('${order.userName ?? '-'}'.capitalize.toString(),
+                  style: urbanistSemiBold.copyWith(
+                      height: .25, fontSize: 16, color: AppColors.appTheme)),
+              Text(controller.currency + '${order.total}',
+                  style: urbanistExtraBold.copyWith(
+                      height: .25, fontSize: 16, color: AppColors.appTheme))
+            ]),
+            SizedBox(height: Get.height * .02),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("ID ${order.id}",
+                    style: urbanistExtraBold.copyWith(
+                        fontSize: 16, color: AppColors.doveGray)),
+                Text(
+                  DateFormat('d MMMM, yyyy hh:mm:ss')
+                      .format((DateTime.parse(order.createdAt.toString()))),
+                )
+
+                // Text(order.createdAt.toString(),
+                //     style: urbanistExtraBold.copyWith(
+                //         fontSize: 16, color: AppColors.doveGray)),
+              ],
+            ),
+            SizedBox(height: Get.height * .02),
+            Row(
+              children: [
+                Container(
                   padding: EdgeInsets.symmetric(
                     horizontal: getProportionateScreenWidth(8),
                     vertical: getProportionateScreenHeight(5),
@@ -358,23 +349,64 @@ class OverViewPage extends GetView<OverViewController> {
                   ),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
-                      color: AppColors.lightGreen),
+                      color: order.status != null && order.status == 5
+                          ? AppColors.lightGreen
+                          : AppColors.lightYellow),
                   child: Center(
-                      child: Text(
-                    "${order.method}",
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                    style: urbanistSemiBold.copyWith(fontSize: 14),
-                  )),
+                      child: Text("${controller.getStatus(order.status ?? 1)}",
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          style: urbanistSemiBold.copyWith(fontSize: 14))),
                 ),
-              )
-            ],
-          ),
-          SizedBox(height: Get.height * .02),
-          Divider(
-            thickness: 1,
-          )
-        ],
+                order.curbsidePickup == "true"
+                    ? Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: getProportionateScreenWidth(8),
+                          vertical: getProportionateScreenHeight(5),
+                        ),
+                        margin: EdgeInsets.symmetric(
+                          horizontal: getProportionateScreenWidth(3),
+                        ),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: AppColors.lightPink.withOpacity(.24)),
+                        child: Center(
+                            child: Text("Curbside Pickup",
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                style:
+                                    urbanistSemiBold.copyWith(fontSize: 14))),
+                      )
+                    : SizedBox(),
+                Flexible(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: getProportionateScreenWidth(8),
+                      vertical: getProportionateScreenHeight(5),
+                    ),
+                    margin: EdgeInsets.symmetric(
+                      horizontal: getProportionateScreenWidth(3),
+                    ),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: AppColors.lightGreen),
+                    child: Center(
+                        child: Text(
+                      "${order.method}",
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      style: urbanistSemiBold.copyWith(fontSize: 14),
+                    )),
+                  ),
+                )
+              ],
+            ),
+            SizedBox(height: Get.height * .02),
+            Divider(
+              thickness: 1,
+            )
+          ],
+        ),
       ),
     );
   }

@@ -264,8 +264,8 @@ class WalletPage extends GetView<WalletController> {
           ),
           SizedBox(height: Get.height * .01),
           Container(
-            width: 100,
-            height: 23,
+            width: 140,
+            height: 26,
             padding: const EdgeInsets.symmetric(horizontal: 10),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
@@ -274,6 +274,8 @@ class WalletPage extends GetView<WalletController> {
                     : AppColors.lightYellow),
             child: Center(
                 child: Text(order.status,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
                     style: urbanistSemiBold.copyWith(
                         fontSize: 14, color: "#1D2C23".fromHex))),
           ),

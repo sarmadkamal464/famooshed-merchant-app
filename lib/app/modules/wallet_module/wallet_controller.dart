@@ -38,7 +38,7 @@ class WalletController extends GetxController {
         try {
           var getOwnerWalletResponse = GetOwnerWalletResponse.fromJson(value);
           totalEarning.value =
-              getOwnerWalletResponse.earning.toStringAsFixed(2).toString();
+              getOwnerWalletResponse.earning.toStringAsFixed(3).toString();
           todayEarning.value = getOwnerWalletResponse.currentdayearning
               .toStringAsFixed(2)
               .toString();
